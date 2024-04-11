@@ -1,6 +1,7 @@
 package com.example.saks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,30 +12,34 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.saks.api.API_Access;
+import com.example.saks.api.Error;
+import com.example.saks.api.Login;
+import com.example.saks.api.Token;
 import com.example.saks.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.io.IOException;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    protected EditText editTextMatrikelnummer, editTextPassword;
-    protected Button loginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextMatrikelnummer = (EditText) findViewById(R.id.editTextMatrikelnummer);
-
         initViews();
 
 
@@ -77,22 +82,29 @@ public class MainActivity extends AppCompatActivity {
             checkPermissionAndShowActivity(this);
         });
 
-        loginButton.setOnClickListener(v -> {
-            String token = null;
-            try {
-                token = API_Access.login(editTextMatrikelnummer.getText().toString(), editTextPassword.toString());
-                Toast.makeText(this, token, Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                Log.e("DEBUG", "IOException", e);
-            } catch (IllegalAccessException e) {
-                Log.e("DEBUG", "IllegalAccessException", e);
-            } catch (InstantiationException e) {
-                Log.e("DEBUG", "InstantiationException", e);
-            }
+        binding.loginButton.setOnClickListener(v -> {
+            API_Access.putCall("/login", new Login(binding.editTextMatrikelnummer.getText().toString(), binding.editTextPassword.getText().toString()), new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
 
+                }
 
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.isSuccessful()){
+                        Token token = new Gson().fromJson(response.body().string(), Token.class);
+                        runOnUiThread(() -> {
+                            Toast.makeText(MainActivity.this, token.token, Toast.LENGTH_SHORT).show();
+                        });
+                    } else {
+                        Error error = new Gson().fromJson(response.body().string(), Error.class);
 
-
+                        runOnUiThread(() -> {
+                            Toast.makeText(MainActivity.this, "Error-Code " + response.code() + "\nError: " + error.error, Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }
+            });
         });
     }
 
