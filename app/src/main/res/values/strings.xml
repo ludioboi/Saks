@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Saks</string>
+    <string name="saks_qr_code">SakS_QR_Code</string>
+    <string name="passwort">Passwort</string>
+    <string name="matrikelnummer">Matrikelnummer</string>
+    <string name="saks">SakS</string>
+    <string name="logo">Logo</string>
+</resources>
