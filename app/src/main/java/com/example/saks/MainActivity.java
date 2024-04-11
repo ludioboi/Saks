@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         if (result.getContents() == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
         } else {
-            setResult(result.getContents());
+            Toast.makeText(this, result.getContents(), Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -63,19 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         binding.fab.setOnClickListener(view -> {
-            try {
-                checkPermissionAndShowActivity(this);
-            } catch (IOException | IllegalAccessException | InstantiationException e) {
-                throw new RuntimeException(e);
-            }
+            checkPermissionAndShowActivity(this);
         });
     }
 
-    private void checkPermissionAndShowActivity(Context context) throws IOException, IllegalAccessException, InstantiationException {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                android.Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED) {
+    private void checkPermissionAndShowActivity(Context context) {
+        if (ContextCompat.checkSelfPermission(context,
+                android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             showCamera();
         } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)) {
             Toast.makeText(context, "Camera permission required", Toast.LENGTH_SHORT).show();
@@ -83,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermissionLauncher.launch(android.Manifest.permission.CAMERA);
         }
 
-        API_Access.login(Integer.parseInt(editTextMatrikelnummer.getText().toString()), editTextPassword.getText().toString());
     }
 
     private void initBinding() {
