@@ -30,9 +30,9 @@ public class API_Access {
         return obj;
     }
 
-    public static String login(int id, String password) throws IOException, IllegalAccessException, InstantiationException {
+    public static String login(String id, String password) throws IOException, IllegalAccessException, InstantiationException {
         RequestBody formBody = new FormBody.Builder()
-                .add("id", String.valueOf(id))
+                .add("id", id)
                 .add("password", password)
                 .build();
         Token t = PutCall("/login", formBody, Token.class).newInstance();

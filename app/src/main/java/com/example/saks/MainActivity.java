@@ -3,6 +3,9 @@ package com.example.saks;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,26 +24,39 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    EditText editTextMatrikelnummer;
-    EditText editTextPassword;
+    protected EditText editTextMatrikelnummer, editTextPassword;
+    protected Button loginButton;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextMatrikelnummer = (EditText) findViewById(R.id.editTextMatrikelnummer);
+
+        initViews();
+
+
+    }
     private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), (isGranted) -> {
                 if(isGranted) {
                     showCamera();
                 }
             });
 
     private final ActivityResultLauncher<ScanOptions> qrCodeLauncher = registerForActivityResult(new ScanContract(), result -> {
-        if (result.getContents() == null) {
-            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
-        } else {
+        if (result.getContents() != null) {
+            // QR Scanning success
             Toast.makeText(this, result.getContents(), Toast.LENGTH_SHORT).show();
+
+        } else {
+            // QR Scanning failed
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
         }
     });
 
-    private void setResult(String contents) {
-        binding.textResult.setText(contents);
-    }
 
     private void showCamera() {
         ScanOptions options = new ScanOptions();
@@ -54,16 +70,29 @@ public class MainActivity extends AppCompatActivity {
         qrCodeLauncher.launch(options);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initBinding();
-        initViews();
-    }
+
 
     private void initViews() {
         binding.fab.setOnClickListener(view -> {
             checkPermissionAndShowActivity(this);
+        });
+
+        loginButton.setOnClickListener(v -> {
+            String token = null;
+            try {
+                token = API_Access.login(editTextMatrikelnummer.getText().toString(), editTextPassword.toString());
+                Toast.makeText(this, token, Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                Log.e("DEBUG", "IOException", e);
+            } catch (IllegalAccessException e) {
+                Log.e("DEBUG", "IllegalAccessException", e);
+            } catch (InstantiationException e) {
+                Log.e("DEBUG", "InstantiationException", e);
+            }
+
+
+
+
         });
     }
 
@@ -79,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initBinding() {
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-    }
+
+
 }
