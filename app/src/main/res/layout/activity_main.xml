@@ -19,7 +19,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/logo"
-            android:src="@drawable/qr_code_scanner" />
+            android:src="@drawable/saks_icon_no_bg" />
 
         <TextView
             android:id="@+id/text_titel_short"
@@ -70,16 +70,20 @@
                     android:id="@+id/shortkeyButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/gray_sec"
                     android:text="@string/shortkeyButton"
                     app:layout_anchor="@+id/layout_result" />
 
                 <Button
                     android:id="@+id/loginButton"
                     style="@style/Theme.Saks"
-                    android:layout_width="wrap_content"
+                    android:layout_width="98dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:backgroundTint="@color/icon_red"
                     android:text="@string/button_login"
+                    android:textColorHighlight="@color/icon_red"
+                    android:textColorLink="@color/icon_red"
                     android:translationY="10dp"
                     app:layout_anchor="@+id/layout_result"
                     tools:ignore="TouchTargetSizeCheck" />
