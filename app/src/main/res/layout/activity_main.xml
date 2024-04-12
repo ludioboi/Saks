@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +10,10 @@
         android:id="@+id/layout_result"
         android:layout_width="wrap_content"
         android:layout_height="360dp"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:translationY="100dp">
 
         <ImageView
             android:layout_width="100dp"
@@ -22,7 +22,7 @@
             android:src="@drawable/qr_code_scanner" />
 
         <TextView
-            android:id="@+id/text_result"
+            android:id="@+id/text_titel_short"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -32,18 +32,20 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editTextMatrikelnummer"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/matrikelnummer"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:minHeight="48dp"
+                android:textColorHint="#546E7A" />
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -52,8 +54,35 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/passwort"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:minHeight="48dp"
+                android:textColorHint="#546E7A"
+                android:translationY="5dp" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center"
+                android:orientation="vertical"
+                android:translationY="10dp">
+
+                <TextView
+                    android:id="@+id/shortkeyButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shortkeyButton"
+                    app:layout_anchor="@+id/layout_result" />
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/button_login"
+                    android:translationY="10dp"
+                    app:layout_anchor="@+id/layout_result"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -63,24 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/cadmium_violet" />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/saks_qr_code"
         android:backgroundTint="@color/cadmium_violet"
-        app:tint="@android:color/white"
-        android:src="@drawable/qr_code_scanner"
-        app:layout_anchor="@id/bottomAppBar" />
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_anchor="@+id/layout_result"
-        app:layout_anchorGravity="bottom|center" />
+        tools:ignore="VisualLintBottomAppBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
