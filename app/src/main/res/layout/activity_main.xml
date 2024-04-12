@@ -75,6 +75,7 @@
 
                 <Button
                     android:id="@+id/loginButton"
+                    style="@style/Theme.Saks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -92,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/cadmium_violet"
+        android:backgroundTint="@color/icon_red"
         tools:ignore="VisualLintBottomAppBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

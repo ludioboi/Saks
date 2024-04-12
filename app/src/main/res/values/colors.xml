@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="cadmium_violet">#8541A9</color>
+    <color name="gray">#504F53</color>
+    <color name="gray_sec">#828282</color>
+    <color name="icon_red">#E6544B</color>
+    <color name="icon_red_sec">#CA3128</color>
 </resources>
