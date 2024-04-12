@@ -52,11 +52,13 @@ public class API_Access {
     }
 
     public static void getCall(String url, Callback callback) {
-        Request request = new Request.Builder()
-                .url(baseurl + url)
-                .get()
-                .build();
-        client.newCall(request).enqueue(callback);
+
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(baseurl + url).get();
+        if (token != null){
+            requestBuilder.addHeader("Authorization", token);
+        }
+        client.newCall(requestBuilder.build()).enqueue(callback);
     }
 
     public static void deleteCall(String url, Callback callback) {
@@ -77,6 +79,6 @@ public class API_Access {
     }
 
     public static void deleteCall(String url, Object json, Callback callback) {
-        postCall(url, new Gson().toJson(json), callback);
+        deleteCall(url, new Gson().toJson(json), callback);
     }
 }

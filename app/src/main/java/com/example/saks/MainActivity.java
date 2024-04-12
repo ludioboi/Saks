@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import com.example.saks.api.API_Access;
 import com.example.saks.api.Error;
 import com.example.saks.api.Login;
+import com.example.saks.api.Person;
 import com.example.saks.api.Token;
 import com.example.saks.databinding.ActivityMainBinding;
 import com.google.gson.Gson;
@@ -86,16 +87,48 @@ public class MainActivity extends AppCompatActivity {
             API_Access.putCall("/login", new Login(binding.editTextMatrikelnummer.getText().toString(), binding.editTextPassword.getText().toString()), new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                    runOnUiThread(() -> {
+                        Toast.makeText(MainActivity.this, "Could not receive a response from the server", Toast.LENGTH_SHORT).show();
+                    });
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()){
                         Token token = new Gson().fromJson(response.body().string(), Token.class);
+                        API_Access.token = token.token;;
                         runOnUiThread(() -> {
                             Toast.makeText(MainActivity.this, token.token, Toast.LENGTH_SHORT).show();
                         });
+
+
+                        API_Access.getCall("/me", new Callback() {
+                            @Override
+                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                runOnUiThread(() -> {
+                                    Toast.makeText(MainActivity.this, "Exception", Toast.LENGTH_SHORT).show();
+                                });
+                            }
+
+                            @Override
+                            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                if (response.isSuccessful()){
+                                    String res = response.body().string();
+                                    runOnUiThread(() -> {
+                                        binding.textResult.setText(res);
+                                    });
+                                    Person me = new Gson().fromJson(res, Person.class);
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(MainActivity.this, me.toString(), Toast.LENGTH_LONG).show();
+                                    });
+                                } else {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(MainActivity.this, "Could not get /me", Toast.LENGTH_SHORT).show();
+                                    });
+                                }
+                            }
+                        });
+
                     } else {
                         Error error = new Gson().fromJson(response.body().string(), Error.class);
 
