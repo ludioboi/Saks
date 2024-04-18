@@ -7,4 +7,6 @@
     <string name="logo">Logo</string>
     <string name="button_login">Login</string>
     <string name="shortkeyButton">Anmelden mit Short</string>
+    <string name="background_logo">background_logo</string>
+    <string name="qr_code">QR-Code</string>
 </resources>

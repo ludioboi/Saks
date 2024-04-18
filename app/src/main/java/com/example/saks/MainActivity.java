@@ -1,18 +1,10 @@
 package com.example.saks;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.example.saks.api.API_Access;
 import com.example.saks.api.Error;
@@ -37,40 +29,29 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initViews();
-
-
     }
-
-
 
     private void initViews() {
-        binding.loginButton.setOnClickListener(v -> {
-            API_Access.putCall("/login", new Login(binding.editTextMatrikelnummer.getText().toString(), binding.editTextPassword.getText().toString()), new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(MainActivity.this, "Could not receive a response from the server", Toast.LENGTH_SHORT).show();
-                    });
-                }
+        binding.loginButton.setOnClickListener(v -> API_Access.putCall("/login", new Login(binding.editTextMatrikelnummer.getText().toString(), binding.editTextPassword.getText().toString()), new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Could not receive a response from the server", Toast.LENGTH_SHORT).show());
+            }
 
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        Token token = new Gson().fromJson(response.body().string(), Token.class);
-                        API_Access.token = token.token;;
-                        runOnUiThread(() -> {
-                            Toast.makeText(MainActivity.this, token.token, Toast.LENGTH_SHORT).show();
-                        });
-                    } else {
-                        Error error = new Gson().fromJson(response.body().string(), Error.class);
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Token token = new Gson().fromJson(response.body().string(), Token.class);
+                    API_Access.token = token.token;
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, token.token, Toast.LENGTH_SHORT).show());
+                } else {
+                    Error error = new Gson().fromJson(response.body().string(), Error.class);
 
-                        runOnUiThread(() -> {
-                            Toast.makeText(MainActivity.this, "Error-Code " + response.code() + "\nError: " + error.error, Toast.LENGTH_SHORT).show();
-                        });
-                    }
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error-Code " + response.code() + "\nError: " + error.error, Toast.LENGTH_SHORT).show());
                 }
-            });
-        });
+            }
+        }));
     }
+
 
 }
