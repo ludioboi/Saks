@@ -10,4 +10,5 @@
     <string name="background_logo">background_logo</string>
     <string name="qr_code">QR-Code</string>
     <string name="qr_code_button">qr_code_button</string>
+    <string name="qr_code_logo">qr_code_logo</string>
 </resources>

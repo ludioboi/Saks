@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.saks.api.API_Access;
 import com.example.saks.api.Error;
 import com.example.saks.api.Token;
-import com.example.saks.databinding.ActivityMainBinding;
+import com.example.saks.databinding.ActivityLoginBinding;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -20,12 +20,12 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initViews();
     }
@@ -51,6 +51,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         }));
     }
-
-
 }
