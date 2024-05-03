@@ -36,7 +36,8 @@
                 android:hint="@string/matrikelnummer"
                 android:inputType="phone"
                 android:minHeight="48dp"
-                android:textColorHint="#546E7A" />
+                android:textColorHint="#546E7A"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -49,7 +50,8 @@
                 android:inputType="textPassword"
                 android:minHeight="48dp"
                 android:textColorHint="#546E7A"
-                android:translationY="5dp" />
+                android:translationY="5dp"
+                android:textColor="@color/black"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -72,7 +74,7 @@
                     android:layout_width="98dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/icon_red"
+                    android:backgroundTint="@color/icon_red_sec"
                     android:text="@string/button_login"
                     android:textColorHighlight="@color/icon_red"
                     android:textColorLink="@color/icon_red"

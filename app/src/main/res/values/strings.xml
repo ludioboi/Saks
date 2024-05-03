@@ -11,4 +11,8 @@
     <string name="qr_code">QR-Code</string>
     <string name="qr_code_button">qr_code_button</string>
     <string name="qr_code_logo">qr_code_logo</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="timetable">TimeTable</string>
+    <string name="settings">Settings</string>
 </resources>
