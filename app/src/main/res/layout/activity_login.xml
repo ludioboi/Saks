@@ -18,7 +18,7 @@
             android:layout_width="300dp"
             android:layout_height="88dp"
             android:contentDescription="@string/logo"
-            android:background="@drawable/transparent_banner_alt"
+            android:background="@drawable/transparent_banner"
             android:layout_margin="10dp"/>
 
         <LinearLayout

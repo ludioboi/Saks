@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
 
 import com.example.saks.api.API_Access;
 import com.example.saks.databinding.ActivityMainMenuBinding;
@@ -86,24 +87,16 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.mmHome) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment,HomeFragment.newInstance("",""))
-                    .commit();
+
         }
         if (item.getItemId() == R.id.mmProfile) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment,ProfilFragment.newInstance("",""))
-                    .commit();
+
         }
         if (item.getItemId() == R.id.mmTimeTable) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment,TimeTableFragment.newInstance("",""))
-                    .commit();
+
         }
         if (item.getItemId() == R.id.mmSettings) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment,SettingsFragment.newInstance("",""))
-                    .commit();
+
         }
 
         return super.onOptionsItemSelected(item);
