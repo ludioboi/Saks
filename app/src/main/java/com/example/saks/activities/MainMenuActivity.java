@@ -3,6 +3,7 @@ package com.example.saks.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -84,7 +85,8 @@ public class MainMenuActivity extends AppCompatActivity {
         initBinding();
         initViews();
         Uri uri = getIntent().getData();
-        if (API_Access.token == null){
+
+        if (API_Access.getToken(getApplicationContext()).isEmpty()){
             Intent loginIntent = new Intent(this, LoginActivity.class);
             if (uri != null) {
                 loginIntent.setData(uri);
@@ -92,7 +94,6 @@ public class MainMenuActivity extends AppCompatActivity {
             startActivity(loginIntent);
             return;
         }
-
         if (uri != null){
             Intent presenceIntent = new Intent(this, PresenceActivity.class);
             presenceIntent.setData(uri);

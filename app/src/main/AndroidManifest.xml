@@ -41,8 +41,11 @@
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
 
                 <data android:scheme="https" />
+                <data android:scheme="app" />
                 <data android:scheme="http" />
+                <data android:host="saks-bbs2.de" />
                 <data android:host="www.saks-bbs2.de" />
+
                 <data android:pathPrefix="/me/present" />
                 <data android:pathPrefix="/me/present/" />
             </intent-filter>
