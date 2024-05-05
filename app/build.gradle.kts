@@ -43,16 +43,16 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.coordinatorlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+
+    implementation (libs.androidx.recyclerview)
+    implementation (libs.androidx.recyclerview.selection)
     implementation(libs.journeyapps.zxing.android.embedded)
     implementation(libs.core)
     implementation(libs.okhttp)
     implementation(libs.gson)
-
-
-
-
 }

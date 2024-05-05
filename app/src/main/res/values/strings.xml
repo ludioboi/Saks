@@ -7,4 +7,14 @@
     <string name="logo">Logo</string>
     <string name="button_login">Login</string>
     <string name="shortkeyButton">Anmelden mit Short</string>
+    <string name="background_logo">background_logo</string>
+    <string name="qr_code">QR-Code</string>
+    <string name="qr_code_button">qr_code_button</string>
+    <string name="qr_code_logo">qr_code_logo</string>
+    <string name="home">Home</string>
+    <string name="profile">Profil</string>
+    <string name="timetable">Plan</string>
+    <string name="settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
