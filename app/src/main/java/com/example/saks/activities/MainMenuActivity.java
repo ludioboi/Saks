@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -102,12 +103,9 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
-        NavDeepLinkBuilder navDeepLinkBuilder = navController.createDeepLink()
-                .setDestination(R.id.homeFragment)
-                .setArguments(intent.getExtras());
-        navDeepLinkBuilder.createPendingIntent();
-
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            // Handle the NDEF data here
+        }
     }
 
     @Override
