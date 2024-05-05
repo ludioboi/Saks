@@ -8,7 +8,8 @@
         android:id="@+id/homeFragment"
         android:name="com.example.saks.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home"/>
+
     <fragment
         android:id="@+id/profilFragment2"
         android:name="com.example.saks.fragments.ProfilFragment"

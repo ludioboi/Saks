@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDeepLinkBuilder;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 
@@ -52,7 +55,14 @@ public class MainMenuActivity extends AppCompatActivity {
     });
 
     private void setResult(String contents) {
-        Toast.makeText(this,contents, Toast.LENGTH_SHORT).show();
+        Uri uri = Uri.parse(contents);
+        if (uri.getHost().equals("www.saks-bbs2.de")){
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
+            intent.setPackage("com.example.saks");
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showCamera() {
@@ -72,11 +82,32 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
-
+        Uri uri = getIntent().getData();
         if (API_Access.token == null){
             Intent loginIntent = new Intent(this, LoginActivity.class);
+            if (uri != null) {
+                loginIntent.setData(uri);
+            }
             startActivity(loginIntent);
+            return;
         }
+
+        if (uri != null){
+            Intent presenceIntent = new Intent(this, PresenceActivity.class);
+            presenceIntent.setData(uri);
+            startActivity(presenceIntent);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
+        NavDeepLinkBuilder navDeepLinkBuilder = navController.createDeepLink()
+                .setDestination(R.id.homeFragment)
+                .setArguments(intent.getExtras());
+        navDeepLinkBuilder.createPendingIntent();
+
     }
 
     @Override

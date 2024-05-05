@@ -1,6 +1,7 @@
 package com.example.saks.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
+
     }
 
     private void initBinding() {
@@ -47,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         if (id.equals("0000") && password.equals("admin")) {
             API_Access.token = "abcd";
             Intent myIntent = new Intent(this, MainMenuActivity.class);
+            if (getIntent().getData() != null){
+                myIntent.setData(getIntent().getData());
+            }
             startActivity(myIntent);
         } else {
             API_Access.putCall("/login", new Login(id, password), new Callback() {
@@ -64,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Error error = new Gson().fromJson(response.body().string(), Error.class);
 
-                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error-Code " + response.code() + "\nError: " + error.error, Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error-Code " + response.code() + "\nError: " + error.message, Toast.LENGTH_SHORT).show());
                     }
                 }
             });
