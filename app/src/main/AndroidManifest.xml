@@ -10,7 +10,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -25,35 +28,38 @@
         tools:targetApi="31">
         <activity
             android:name=".activities.PresenceActivity"
-            android:exported="true">
+            android:exported="false">
+
         </activity>
         <activity
             android:name=".activities.MainMenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
 
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
                 <data android:scheme="https" />
                 <data android:scheme="app" />
                 <data android:scheme="http" />
                 <data android:host="saks-bbs2.de" />
                 <data android:host="www.saks-bbs2.de" />
-
                 <data android:pathPrefix="/me/present" />
                 <data android:pathPrefix="/me/present/" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
