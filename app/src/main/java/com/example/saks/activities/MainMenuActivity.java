@@ -15,17 +15,23 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 
 import com.example.saks.R;
-import com.example.saks.activities.LoginActivity;
 import com.example.saks.api.API_Access;
 import com.example.saks.databinding.ActivityMainMenuBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     private ActivityMainMenuBinding binding;
+    private BottomNavigationView bottomNavigationView;
+    private NavController navController;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -80,26 +86,28 @@ public class MainMenuActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.mmHome) {
-
-        }
-        if (item.getItemId() == R.id.mmProfile) {
-
-        }
-        if (item.getItemId() == R.id.mmTimeTable) {
-
-        }
-        if (item.getItemId() == R.id.mmSettings) {
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
+        bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.mmHome) {
+                    navController.navigate(R.id.homeFragment);
+                }
+                if (item.getItemId() == R.id.mmProfile) {
+                    navController.navigate(R.id.profilFragment2);
+                }
+                if (item.getItemId() == R.id.mmSettings) {
+                    navController.navigate(R.id.settingsFragment);
+                }
+                if (item.getItemId() == R.id.mmTimeTable) {
+                    navController.navigate(R.id.timeTableFragment);
+                }
+                return true;
+            }
+        });
+
     }
 
     private void checkPermissionAndShowActivity(Context context) {
