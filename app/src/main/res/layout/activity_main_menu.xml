@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    tools:context=".MainMenuActivity">
+    tools:context=".activities.MainMenuActivity">
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
@@ -23,18 +24,8 @@
         app:fabCradleVerticalOffset="10dp"
         app:fabCradleRoundedCornerRadius="10dp"
         app:fabCradleMargin="10dp"
-        android:minHeight="56dp"
         android:backgroundTint="@color/icon_red" >
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomMenuNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/transparent_background"
-            android:minHeight="56dp"
-            app:elevation="0dp"
-            app:menu="@menu/bottom_nav_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -45,5 +36,15 @@
         app:layout_anchor="@id/bottomAppBar"
         android:backgroundTint="@color/white"
         android:contentDescription="@string/qr_code_button" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomMenuNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/transparent_background"
+        android:minHeight="56dp"
+        app:elevation="0dp"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

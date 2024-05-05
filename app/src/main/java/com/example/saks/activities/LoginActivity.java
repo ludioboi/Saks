@@ -1,4 +1,4 @@
-package com.example.saks;
+package com.example.saks.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

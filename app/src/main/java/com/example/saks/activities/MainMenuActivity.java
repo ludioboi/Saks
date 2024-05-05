@@ -1,4 +1,4 @@
-package com.example.saks;
+package com.example.saks.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,15 +15,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
 
+import com.example.saks.R;
+import com.example.saks.activities.LoginActivity;
 import com.example.saks.api.API_Access;
 import com.example.saks.databinding.ActivityMainMenuBinding;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
 
