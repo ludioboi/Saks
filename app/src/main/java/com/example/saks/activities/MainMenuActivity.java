@@ -39,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     showCamera();
                 }
                 else {
-                    Toast.makeText(this,"No Camera Permission", Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"No Camera Permission", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -52,7 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
     });
 
     private void setResult(String contents) {
-
+        Toast.makeText(this,contents, Toast.LENGTH_SHORT).show();
     }
 
     private void showCamera() {
@@ -89,6 +89,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
         bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
+        navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
