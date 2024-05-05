@@ -33,12 +33,14 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true">
+
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
-            tools:replace="android:screenOrientation" />
+            tools:replace="android:screenOrientation"
+            tools:ignore="DiscouragedApi" />
     </application>
 
 </manifest>
