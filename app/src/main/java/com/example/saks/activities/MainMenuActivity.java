@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,10 +32,15 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     private ActivityMainMenuBinding binding;
-    private BottomNavigationView bottomNavigationView;
     private NavController navController;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
@@ -46,12 +56,27 @@ public class MainMenuActivity extends AppCompatActivity {
     private  ActivityResultLauncher<ScanOptions> qrCodeLauncher = registerForActivityResult(new ScanContract(), result -> {
        if (result.getContents() == null) {
            Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
+
+           TextView TextView = findViewById(R.id.anwesenheit_textview);
+           TextView.setText("Anwesend");
        } else {
            setResult(result.getContents());
        }
     });
 
     private void setResult(String contents) {
+         /* API_Access.postCall("/me/present", "{}", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        }); */
+
 
     }
 
@@ -72,6 +97,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
+        navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
 
         if (API_Access.token == null){
             Intent loginIntent = new Intent(this, LoginActivity.class);
@@ -88,7 +114,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
-        bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
