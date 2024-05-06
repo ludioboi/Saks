@@ -36,20 +36,17 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
                 <data android:scheme="https" />
-                <data android:scheme="app" />
+                <data android:scheme="app"/>
+                <data android:host="com.example.saks"/>
                 <data android:scheme="http" />
                 <data android:host="saks-bbs2.de" />
                 <data android:host="www.saks-bbs2.de" />
