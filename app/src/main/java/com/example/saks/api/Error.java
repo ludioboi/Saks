@@ -1,6 +1,6 @@
 package com.example.saks.api;
 
 public class Error {
-
-    public String error;
+    public String message;
+    public int code;
 }

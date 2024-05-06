@@ -3,7 +3,10 @@ package com.example.saks.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDeepLinkBuilder;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 
@@ -49,7 +54,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     showCamera();
                 }
                 else {
-                    Toast.makeText(this,"No Camera Permission", Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"No Camera Permission", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -65,19 +70,14 @@ public class MainMenuActivity extends AppCompatActivity {
     });
 
     private void setResult(String contents) {
-         /* API_Access.postCall("/me/present", "{}", new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-            }
-        }); */
-
-
+        Uri uri = Uri.parse(contents);
+        if (uri.getHost().equals("www.saks-bbs2.de")){
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
+            intent.setPackage("com.example.saks");
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showCamera() {
@@ -97,11 +97,30 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
+
+        Uri uri = getIntent().getData();
         navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
 
-        if (API_Access.token == null){
+        if (API_Access.getToken(getApplicationContext()).isEmpty()){
             Intent loginIntent = new Intent(this, LoginActivity.class);
+            if (uri != null) {
+                loginIntent.setData(uri);
+            }
             startActivity(loginIntent);
+            return;
+        }
+        if (uri != null){
+            Intent presenceIntent = new Intent(this, PresenceActivity.class);
+            presenceIntent.setData(uri);
+            startActivity(presenceIntent);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            // Handle the NDEF data here
         }
     }
 
@@ -114,7 +133,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
+
+        bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
+        navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

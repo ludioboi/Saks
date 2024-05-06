@@ -1,6 +1,8 @@
 package com.example.saks.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -45,8 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         String id = binding.editTextMatrikelnummer.getText().toString();
         String password = binding.editTextPassword.getText().toString();
         if (id.equals("0000") && password.equals("admin")) {
-            API_Access.token = "abcd";
+            API_Access.setToken("abcd", getApplicationContext());
             Intent myIntent = new Intent(this, MainMenuActivity.class);
+            if (getIntent().getData() != null){
+                myIntent.setData(getIntent().getData());
+            }
             startActivity(myIntent);
         } else {
             API_Access.putCall("/login", new Login(id, password), new Callback() {
@@ -59,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.isSuccessful()) {
                         Token token = new Gson().fromJson(response.body().string(), Token.class);
-                        API_Access.token = token.token;
+                        API_Access.setToken(token.token, getApplicationContext());
                         runOnUiThread(() -> Toast.makeText(LoginActivity.this, token.token, Toast.LENGTH_SHORT).show());
                     } else {
                         Error error = new Gson().fromJson(response.body().string(), Error.class);
 
-                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error-Code " + response.code() + "\nError: " + error.error, Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error-Code " + response.code() + "\nError: " + error.message, Toast.LENGTH_SHORT).show());
                     }
                 }
             });
