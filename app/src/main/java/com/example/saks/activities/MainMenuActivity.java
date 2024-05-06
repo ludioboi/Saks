@@ -54,17 +54,12 @@ public class MainMenuActivity extends AppCompatActivity {
                     showCamera();
                 }
                 else {
-                    Toast.makeText(this,"No Camera Permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Keine Kamera Berechtigung", Toast.LENGTH_SHORT).show();
                 }
             });
 
     private  ActivityResultLauncher<ScanOptions> qrCodeLauncher = registerForActivityResult(new ScanContract(), result -> {
-       if (result.getContents() == null) {
-           Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
-
-           TextView TextView = findViewById(R.id.anwesenheit_textview);
-           TextView.setText("Anwesend");
-       } else {
+       if (result.getContents() != null) {
            setResult(result.getContents());
        }
     });
@@ -133,7 +128,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
-
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
         bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
         navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
 
@@ -165,7 +160,7 @@ public class MainMenuActivity extends AppCompatActivity {
         ) == PackageManager.PERMISSION_GRANTED) {
             showCamera();
         } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-            Toast.makeText(context, "Camera permission required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Kamera Berechtigung benötigt", Toast.LENGTH_SHORT).show();
         } else {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
         }
