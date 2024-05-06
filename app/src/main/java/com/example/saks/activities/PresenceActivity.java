@@ -1,5 +1,6 @@
 package com.example.saks.activities;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -23,10 +24,15 @@ public class PresenceActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        if (getIntent().getData() != null){
-            String data = getIntent().getData().toString();
-            TextView textView = findViewById(R.id.textView);
-            textView.setText(data);
+        if (getIntent().getData() != null) {
+            handleUri(getIntent().getData());
         }
+    }
+
+
+    public void handleUri(Uri uri){
+        String data = uri.toString();
+        TextView textView = findViewById(R.id.textView);
+        textView.setText(data);
     }
 }
