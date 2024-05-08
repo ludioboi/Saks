@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +27,9 @@ import okhttp3.Response;
 
 public class PresenceActivity extends AppCompatActivity {
 
+    ImageView icon_feedback;
+    ProgressBar loadingBar;
+    TextView text_feedback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,12 @@ public class PresenceActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        icon_feedback = findViewById(R.id.icon_feedback);
+        text_feedback = findViewById(R.id.text_feedback);
+        text_feedback.setVisibility(View.GONE);
+        loadingBar = findViewById(R.id.loading_bar);
+        loadingBar.setVisibility(View.VISIBLE);
+        icon_feedback.setVisibility(View.GONE);
         if (getIntent().getData() != null) {
             handleUri(getIntent().getData());
         }
@@ -41,22 +53,32 @@ public class PresenceActivity extends AppCompatActivity {
 
 
     public void handleUri(Uri uri){
-        String data = uri.toString();
-        TextView textView = findViewById(R.id.textView);
-        textView.setTextColor(Color.RED);
-        textView.setText(uri.getPath() + "?" + uri.getQuery());
         API_Access.postCall(uri.getPath() + "?" + uri.getQuery(), "{}", new Callback() {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                runOnUiThread(() -> {
+                    loadingBar.setVisibility(View.GONE);
+                    icon_feedback.setVisibility(View.VISIBLE);
+                    text_feedback.setVisibility(View.VISIBLE);
+                    text_feedback.setText("Es kam keine Antwort vom Server");
+                    icon_feedback.setImageResource(R.drawable.baseline_warning_24);
+                });
             }
 
             @SuppressLint("ResourceAsColor")
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                textView.setTextColor(Color.GREEN);
-                textView.setText(response.body().string());
+                runOnUiThread(() -> {
+                    loadingBar.setVisibility(View.GONE);
+                });
+                if (response.isSuccessful()){
+                    runOnUiThread(() -> {
+                        icon_feedback.setVisibility(View.VISIBLE);
+                        icon_feedback.setImageResource(R.drawable.baseline_assignment_turned_in_24);
+                    });
+                }
+
             }
         });
 
