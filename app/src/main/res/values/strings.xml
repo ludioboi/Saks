@@ -21,4 +21,7 @@
     <string name="raum">G202</string>
     <string name="anwesenheit">Nicht anwesend</string>
     <string name="fail_result_image">Fail_Result_Image</string>
+    <string name="remove_present_button">Anwesenheit Entfernen</string>
+    <string name="set_absence_button">Abwesendheit setzen</string>
+    <string name="set_new_presence">Neue Anwesenheit setzen</string>
 </resources>

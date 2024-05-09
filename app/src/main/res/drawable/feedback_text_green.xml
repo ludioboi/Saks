@@ -4,10 +4,10 @@
 
     <gradient
         android:angle="0"
-        android:centerColor="@color/icon_red_sec"
+        android:centerColor="@color/icon_green_sec"
         android:centerX="50%"
-        android:endColor="@color/icon_red"
-        android:startColor="@color/icon_red"
+        android:endColor="@color/icon_green"
+        android:startColor="@color/icon_green"
         android:type="linear"/>
 
     <corners android:radius="10dp" />
