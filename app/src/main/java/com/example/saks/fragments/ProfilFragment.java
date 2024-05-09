@@ -1,25 +1,24 @@
 package com.example.saks.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.saks.List.ListAdater;
+import com.example.saks.List.ListData;
 import com.example.saks.R;
-import com.example.saks.activities.LoginActivity;
-import com.example.saks.api.API_Access;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfilFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfilFragment extends Fragment {
+public class ProfilFragment extends Fragment  {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,27 +51,24 @@ public class ProfilFragment extends Fragment {
         return fragment;
     }
 
+    ListAdater listAdater;
+    ArrayList<ListData> dataArrayList = new ArrayList<>();
+    ListData listData;
+    View entry;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root =inflater.inflate(R.layout.fragment_profil, container, false);
-        Button logoutButton = root.findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(v -> {
-            API_Access.setToken("", getContext());
-            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
-            startActivity(loginIntent);
-        });
-        return root;
+        entry = inflater.inflate(R.layout.list_item, container, false);
+
+
+         return entry;
     }
 }

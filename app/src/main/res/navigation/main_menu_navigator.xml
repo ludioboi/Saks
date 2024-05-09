@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/profilFragment2"
+        android:id="@+id/profilFragment"
         android:name="com.example.saks.fragments.ProfilFragment"
         android:label="fragment_profil"
         tools:layout="@layout/fragment_profil" />
