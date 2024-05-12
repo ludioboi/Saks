@@ -1,5 +1,6 @@
 package com.example.saks.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.saks.R;
+import com.example.saks.activities.LoginActivity;
+import com.example.saks.api.API_Access;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +65,13 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View root =inflater.inflate(R.layout.fragment_settings, container, false);
+        Button logoutButton = root.findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> {
+            API_Access.setToken("", getContext());
+            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
+            startActivity(loginIntent);
+        });
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 }

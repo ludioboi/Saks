@@ -1,6 +1,5 @@
 package com.example.saks.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,11 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.saks.R;
-import com.example.saks.activities.LoginActivity;
-import com.example.saks.api.API_Access;
+import com.example.saks.presence_list.PresenceUser;
+import com.example.saks.presence_list.PresenceUserListAdapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +54,10 @@ public class ProfilFragment extends Fragment {
         return fragment;
     }
 
+    View binding;
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,20 +65,25 @@ public class ProfilFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root =inflater.inflate(R.layout.fragment_profil, container, false);
-        Button logoutButton = root.findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(v -> {
-            API_Access.setToken("", getContext());
-            Intent loginIntent = new Intent(getContext(), LoginActivity.class);
-            startActivity(loginIntent);
+        binding = inflater.inflate(R.layout.fragment_profil, container, false);
+
+        PresenceUserListAdapter presenceUserListAdapter = new PresenceUserListAdapter(getActivity());
+        presenceUserListAdapter.addPresenceUser(new PresenceUser("Hans", 1, "FOI2A", 1715464800000L, 63420000L, 68400000L));
+
+        ListView listView = binding.findViewById(R.id.listView);
+        listView.setAdapter(presenceUserListAdapter);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            PresenceUser presenceUser = presenceUserListAdapter.getItem(position);
+            presenceUser.setName(String.valueOf(id));
+            presenceUserListAdapter.notifyDataSetChanged();
         });
-        return root;
+
+        return binding;
     }
 }

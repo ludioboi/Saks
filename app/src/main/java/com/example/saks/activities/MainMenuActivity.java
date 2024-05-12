@@ -3,7 +3,6 @@ package com.example.saks.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -11,11 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -24,9 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDeepLinkBuilder;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 
@@ -38,16 +31,10 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
 public class MainMenuActivity extends AppCompatActivity {
 
-    private ActivityMainMenuBinding binding;
-    private NavController navController;
+    ActivityMainMenuBinding binding;
+    NavController navController;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -148,7 +135,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 navController.navigate(R.id.homeFragment);
             }
             if (item.getItemId() == R.id.mmProfile) {
-                navController.navigate(R.id.profilFragment2);
+                navController.navigate(R.id.profilFragment);
             }
             if (item.getItemId() == R.id.mmSettings) {
                 navController.navigate(R.id.settingsFragment);
