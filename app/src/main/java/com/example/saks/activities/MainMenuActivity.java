@@ -4,17 +4,21 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -27,11 +31,12 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import java.net.URISyntaxException;
+
 public class MainMenuActivity extends AppCompatActivity {
 
-    private ActivityMainMenuBinding binding;
-    private BottomNavigationView bottomNavigationView;
-    private NavController navController;
+    ActivityMainMenuBinding binding;
+    NavController navController;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -39,20 +44,33 @@ public class MainMenuActivity extends AppCompatActivity {
                     showCamera();
                 }
                 else {
-                    Toast.makeText(this,"No Camera Permission", Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"Keine Kamera Berechtigung", Toast.LENGTH_SHORT).show();
                 }
             });
 
     private  ActivityResultLauncher<ScanOptions> qrCodeLauncher = registerForActivityResult(new ScanContract(), result -> {
-       if (result.getContents() == null) {
-           Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
-       } else {
+       if (result.getContents() != null) {
            setResult(result.getContents());
        }
     });
 
     private void setResult(String contents) {
-
+        Uri uri = Uri.parse(contents);
+        if (uri == null) {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (uri.getHost() == null) {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (uri.getHost().contains("saks-bbs2.de")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.example.saks");
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showCamera() {
@@ -67,15 +85,46 @@ public class MainMenuActivity extends AppCompatActivity {
         qrCodeLauncher.launch(options);
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
 
-        if (API_Access.token == null){
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finishAndRemoveTask();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
+        Uri uri = getIntent().getData();
+        navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
+
+        if (API_Access.getToken(getApplicationContext()).isEmpty()){
             Intent loginIntent = new Intent(this, LoginActivity.class);
+            if (uri != null) {
+                loginIntent.setData(uri);
+            }
             startActivity(loginIntent);
+            finish();
+            return;
+        }
+        if (uri != null){
+            Intent presenceIntent = new Intent(this, PresenceActivity.class);
+            presenceIntent.setData(uri);
+            startActivity(presenceIntent);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
+            // Handle the NDEF data here
         }
     }
 
@@ -88,24 +137,23 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
-        bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.mmHome) {
-                    navController.navigate(R.id.homeFragment);
-                }
-                if (item.getItemId() == R.id.mmProfile) {
-                    navController.navigate(R.id.profilFragment2);
-                }
-                if (item.getItemId() == R.id.mmSettings) {
-                    navController.navigate(R.id.settingsFragment);
-                }
-                if (item.getItemId() == R.id.mmTimeTable) {
-                    navController.navigate(R.id.timeTableFragment);
-                }
-                return true;
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
+        navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.mmHome) {
+                navController.navigate(R.id.homeFragment);
             }
+            if (item.getItemId() == R.id.mmProfile) {
+                navController.navigate(R.id.profilFragment);
+            }
+            if (item.getItemId() == R.id.mmSettings) {
+                navController.navigate(R.id.settingsFragment);
+            }
+            if (item.getItemId() == R.id.mmTimeTable) {
+                navController.navigate(R.id.timeTableFragment);
+            }
+            return true;
         });
 
     }
@@ -117,7 +165,7 @@ public class MainMenuActivity extends AppCompatActivity {
         ) == PackageManager.PERMISSION_GRANTED) {
             showCamera();
         } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-            Toast.makeText(context, "Camera permission required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Kamera Berechtigung benötigt", Toast.LENGTH_SHORT).show();
         } else {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
         }

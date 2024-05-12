@@ -12,7 +12,9 @@
 
     <item
         android:id="@+id/mmPlaceholder"
-        android:title=""/>
+        android:enabled="false"
+        android:title=""
+        android:visible="true" />
 
     <item
         android:id="@+id/mmTimeTable"

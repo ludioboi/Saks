@@ -1,5 +1,8 @@
 package com.example.saks.api;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Context;
 import android.util.Log;
 
 import androidx.navigation.PopUpToBuilder;
@@ -20,7 +23,7 @@ import okhttp3.Response;
 public class API_Access {
 
     static String baseurl = "http://192.168.178.3:8080";
-    public static String token;
+    public static String token = "";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     static OkHttpClient client = new OkHttpClient();
     public static void putCall(String url, String json, Callback callback) {
@@ -33,17 +36,34 @@ public class API_Access {
 
     }
 
+    public static String getToken(Context context) {
+        if (!token.isEmpty()){
+            return token;
+        }
+        String prefToken = context.getSharedPreferences("saks", MODE_PRIVATE).getString("token", "");
+        setToken(prefToken, context);
+        return prefToken;
+    }
+
+    public static void setToken(String token, Context context) {
+        API_Access.token = token;
+        context.getSharedPreferences("saks", MODE_PRIVATE).edit().putString("token", token).apply();
+    }
+
     public static void putCall(String url, Object json, Callback callback) {
         putCall(url, new Gson().toJson(json), callback);
     }
 
     public static void postCall(String url, String json, Callback callback) {
         RequestBody body = RequestBody.create(json, JSON);
-        Request request = new Request.Builder()
+        Request.Builder request = new Request.Builder()
                 .url(baseurl + url)
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(callback);
+                .post(body);
+        if (!token.isEmpty()){
+            request.addHeader("Authorization", token);
+        }
+
+        client.newCall(request.build()).enqueue(callback);
 
     }
 
