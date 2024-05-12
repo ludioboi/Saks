@@ -31,6 +31,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import java.net.URISyntaxException;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     ActivityMainMenuBinding binding;
@@ -54,8 +56,16 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void setResult(String contents) {
         Uri uri = Uri.parse(contents);
-        if (uri.getHost().equals("www.saks-bbs2.de")){
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(contents));
+        if (uri == null) {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (uri.getHost() == null) {
+            Toast.makeText(this, "QR Code konnte nicht erkannt werden. Bitte versuche es erneut", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (uri.getHost().contains("saks-bbs2.de")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.setPackage("com.example.saks");
             startActivity(intent);
         } else {
