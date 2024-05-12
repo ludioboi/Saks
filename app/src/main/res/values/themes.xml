@@ -27,4 +27,13 @@
         <item name="android:statusBarColor">@color/icon_red</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Saks.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Saks.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Saks.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
