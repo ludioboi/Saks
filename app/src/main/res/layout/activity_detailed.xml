@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_schueler_anwesenheit"
             android:scaleType="centerCrop"
-            app:tint="#4CAF50" />
+            app:tint="@color/icon_red" />
 
     </androidx.cardview.widget.CardView>
 
@@ -58,7 +58,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name:"
+        android:text="Klasse:"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
@@ -67,7 +67,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="name"
+        android:text="klasse"
         android:textSize="16sp"
         android:id="@+id/detailName"
         android:layout_marginStart="10dp"/>
