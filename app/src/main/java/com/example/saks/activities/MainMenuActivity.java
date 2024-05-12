@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -87,11 +88,21 @@ public class MainMenuActivity extends AppCompatActivity {
         qrCodeLauncher.launch(options);
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finishAndRemoveTask();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         Uri uri = getIntent().getData();
         navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
@@ -102,6 +113,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 loginIntent.setData(uri);
             }
             startActivity(loginIntent);
+            finish();
             return;
         }
         if (uri != null){
@@ -129,26 +141,22 @@ public class MainMenuActivity extends AppCompatActivity {
     private void initViews() {
         binding.fab.setOnClickListener(view -> checkPermissionAndShowActivity(this));
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
-        bottomNavigationView = findViewById(R.id.bottomMenuNavigationView);
         navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView)).getNavController();
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.mmHome) {
-                    navController.navigate(R.id.homeFragment);
-                }
-                if (item.getItemId() == R.id.mmProfile) {
-                    navController.navigate(R.id.profilFragment2);
-                }
-                if (item.getItemId() == R.id.mmSettings) {
-                    navController.navigate(R.id.settingsFragment);
-                }
-                if (item.getItemId() == R.id.mmTimeTable) {
-                    navController.navigate(R.id.timeTableFragment);
-                }
-                return true;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.mmHome) {
+                navController.navigate(R.id.homeFragment);
             }
+            if (item.getItemId() == R.id.mmProfile) {
+                navController.navigate(R.id.profilFragment2);
+            }
+            if (item.getItemId() == R.id.mmSettings) {
+                navController.navigate(R.id.settingsFragment);
+            }
+            if (item.getItemId() == R.id.mmTimeTable) {
+                navController.navigate(R.id.timeTableFragment);
+            }
+            return true;
         });
 
     }

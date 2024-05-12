@@ -10,4 +10,5 @@
     <color name="icon_red_sec">#CA3128</color>
     <color name="icon_green">#1BD107</color>
     <color name="icon_green_sec">#159107</color>
+    <color name="yellow">#FFC107</color>
 </resources>

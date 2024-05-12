@@ -53,7 +53,7 @@ public class PresenceActivity extends AppCompatActivity {
         set_new_presence_button = findViewById(R.id.set_new_presence_button);
         waitForFeedback();
         if (getIntent().getData() != null) {
-            handleUri(getIntent().getData(), "{}", "Du wurdest erfolgreich als Anwesend markiert");
+            handleUri(getIntent().getData(), "{}", "Du wurdest erfolgreich als ANWESEND markiert");
             HashMap<String, String> body = new HashMap<>();
             remove_present_button.setOnClickListener((view) -> {
                 body.put("action", "set_absent");
@@ -123,7 +123,7 @@ public class PresenceActivity extends AppCompatActivity {
                     if (response.code() == 330) {
                         icon_feedback.setVisibility(View.VISIBLE);
                         icon_feedback.setImageResource(R.drawable.baseline_assignment_late_24);
-                        setFeedbackText("Du bist bereits als Anwesend markiert");
+                        setFeedbackText("Du bist bereits als ANWESEND markiert");
                         setFeedbackBackground(getDrawable(R.drawable.feedback_red));
                         showButtons();
                     } else if (response.code() == 331) {
@@ -140,7 +140,7 @@ public class PresenceActivity extends AppCompatActivity {
                         icon_feedback.setVisibility(View.VISIBLE);
                         icon_feedback.setImageResource(R.drawable.baseline_warning_24);
                         try {
-                            setFeedbackText("Es gab ein Problem mit der Datenverarbeitung" + response.code() + "\n" + response.body().string());
+                            setFeedbackText(getResources().getString(R.string.server_connection_failed) + "\n" + response.code() + "\n" + response.body().string());
                         } catch (IOException e) {
 
                         }
