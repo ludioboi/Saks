@@ -76,7 +76,10 @@ public class PresenceUser {
         LocalDateTime instant = LocalDateTime.now(ZoneId.of(ZoneId.systemDefault().getId()));
         int currHour = instant.getHour();
         int minutes = instant.getMinute();
-        long currTime = 1000L *60*60* currHour + 1000L *60* minutes;
+        long currTime = 1000L * 60 * 60 * currHour + 1000L *60* minutes;
+        if (present_from == 0) {
+            return false;
+        }
         return currTime >= present_from && currTime <= present_until;
     }
 
@@ -84,5 +87,15 @@ public class PresenceUser {
         this.date = date;
     }
 
-
+    @Override
+    public String toString() {
+        return "PresenceUser{" +
+                "name='" + name + '\'' +
+                ", class_='" + class_ + '\'' +
+                ", present_from=" + present_from +
+                ", present_until=" + present_until +
+                ", date=" + date +
+                ", id=" + id +
+                '}';
+    }
 }

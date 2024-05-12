@@ -23,6 +23,7 @@ public class PresenceUserListAdapter extends BaseAdapter {
 
     public void addPresenceUser(PresenceUser presenceUser) {
         presenceUsers.add(presenceUser);
+        activity.runOnUiThread(this::notifyDataSetChanged);
     }
     public void clearPresenceUsers() {
         presenceUsers.clear();

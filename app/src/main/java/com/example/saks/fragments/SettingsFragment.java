@@ -65,13 +65,14 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root =inflater.inflate(R.layout.fragment_settings, container, false);
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
         Button logoutButton = root.findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(v -> {
             API_Access.setToken("", getContext());
             Intent loginIntent = new Intent(getContext(), LoginActivity.class);
             startActivity(loginIntent);
+            getActivity().finishAffinity();
         });
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return root;
     }
 }
