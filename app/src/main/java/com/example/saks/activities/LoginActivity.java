@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +34,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViews();
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finishAndRemoveTask();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+
     }
 
     private void initBinding() {
@@ -41,6 +51,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initViews() {
         binding.loginButton.setOnClickListener(this::onClick);
+        binding.shortkeyButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ShortKeyActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void onClick(View v) {
@@ -53,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 myIntent.setData(getIntent().getData());
             }
             startActivity(myIntent);
+            finish();
         } else {
             API_Access.putCall("/login", new Login(id, password), new Callback() {
                 @Override
@@ -65,7 +80,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Token token = new Gson().fromJson(response.body().string(), Token.class);
                         API_Access.setToken(token.token, getApplicationContext());
-                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, token.token, Toast.LENGTH_SHORT).show());
+                        Intent myIntent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                        startActivity(myIntent);
+                        finish();
                     } else {
                         Error error = new Gson().fromJson(response.body().string(), Error.class);
 

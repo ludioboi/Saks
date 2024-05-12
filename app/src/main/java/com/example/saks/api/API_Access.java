@@ -56,11 +56,14 @@ public class API_Access {
 
     public static void postCall(String url, String json, Callback callback) {
         RequestBody body = RequestBody.create(json, JSON);
-        Request request = new Request.Builder()
+        Request.Builder request = new Request.Builder()
                 .url(baseurl + url)
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(callback);
+                .post(body);
+        if (!token.isEmpty()){
+            request.addHeader("Authorization", token);
+        }
+
+        client.newCall(request.build()).enqueue(callback);
 
     }
 

@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">SakS</string>
+    <string name="app_name">SAKS</string>
     <string name="saks_qr_code">SakS_QR_Code</string>
     <string name="passwort">Passwort</string>
     <string name="matrikelnummer">Matrikelnummer</string>
-    <string name="saks">SakS</string>
+    <string name="saks">SAKS</string>
     <string name="logo">Logo</string>
     <string name="button_login">Login</string>
     <string name="shortkeyButton">Anmelden mit Short</string>
@@ -13,12 +13,18 @@
     <string name="qr_code_logo">qr_code_logo</string>
     <string name="home">Home</string>
     <string name="profile">Profil</string>
-    <string name="timetable">Plan</string>
-    <string name="settings">Settings</string>
+    <string name="timetable">Stundenplan</string>
+    <string name="settings">Einstellungen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="klasse">FOI2A</string>
-    <string name="raum">G202</string>
-    <string name="anwesenheit">Nicht anwesend</string>
+    <string name="klasse">KLASSE</string>
+    <string name="raum">RAUM</string>
+    <string name="anwesenheit">ANWESEND</string>
     <string name="fail_result_image">Fail_Result_Image</string>
+    <string name="remove_present_button">Anwesenheit Entfernen</string>
+    <string name="set_absence_button">Abwesenheit setzen</string>
+    <string name="set_new_presence">Neue Anwesenheit setzen</string>
+    <string name="server_connection_failed">Server konnte nicht erreicht werden</string>
+    <string name="present">Anwesend</string>
+    <string name="not_present">Nicht Anwesend</string>
 </resources>
