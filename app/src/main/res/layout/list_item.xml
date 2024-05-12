@@ -10,44 +10,75 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/listImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_schueler_anwesenheit"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:tint="@color/icon_red" />
+
+        <TextView
+            android:id="@+id/listName"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@id/listImage"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/listKlasse"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="-120dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/listName"
+            android:text="Klasse"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_toEndOf="@id/listKlasse"
+            android:layout_marginStart="120dp"
+            android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:id="@+id/listImage"
-                android:src="@drawable/ic_schueler_anwesenheit"
-                android:scaleType="centerCrop"
-                app:tint="@color/icon_red"
-                android:layout_marginStart="10dp"
+                android:id="@+id/present_mini_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                app:shapeAppearanceOverlay="@style/roundedImageView"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/remove_presence_icon"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                app:tint="@color/icon_red" />
 
             <TextView
-                android:layout_width="120dp"
+                android:id="@+id/present_text"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/listName"
-                android:text="Name"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="Text"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@id/listImage"/>
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:id="@+id/listKlasse"
-                android:text="Klasse"
-                android:textSize="16sp"
-                android:layout_toEndOf="@id/listName"
-                android:layout_marginTop="25dp"
-                android:layout_marginStart="100dp"
-                android:textColor="@color/black"/>
-            
-        </RelativeLayout>
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

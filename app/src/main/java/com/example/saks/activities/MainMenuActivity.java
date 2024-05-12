@@ -135,7 +135,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 navController.navigate(R.id.homeFragment);
             }
             if (item.getItemId() == R.id.mmProfile) {
-                navController.navigate(R.id.profilFragment2);
+                navController.navigate(R.id.profilFragment);
             }
             if (item.getItemId() == R.id.mmSettings) {
                 navController.navigate(R.id.settingsFragment);

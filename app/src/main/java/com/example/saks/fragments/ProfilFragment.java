@@ -1,15 +1,18 @@
 package com.example.saks.fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.saks.List.ListAdater;
-import com.example.saks.List.ListData;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.saks.R;
+import com.example.saks.presence_list.PresenceUser;
+import com.example.saks.presence_list.PresenceUserListAdapter;
 
 import java.util.ArrayList;
 
@@ -18,7 +21,7 @@ import java.util.ArrayList;
  * Use the {@link ProfilFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfilFragment extends Fragment  {
+public class ProfilFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,24 +54,36 @@ public class ProfilFragment extends Fragment  {
         return fragment;
     }
 
-    ListAdater listAdater;
-    ArrayList<ListData> dataArrayList = new ArrayList<>();
-    ListData listData;
-    View entry;
+    View binding;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        entry = inflater.inflate(R.layout.list_item, container, false);
+        binding = inflater.inflate(R.layout.fragment_profil, container, false);
 
+        PresenceUserListAdapter presenceUserListAdapter = new PresenceUserListAdapter(getActivity());
+        presenceUserListAdapter.addPresenceUser(new PresenceUser("Hans", 1, "FOI2A", 1715464800000L, 63420000L, 68400000L));
 
-         return entry;
+        ListView listView = binding.findViewById(R.id.listView);
+        listView.setAdapter(presenceUserListAdapter);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            PresenceUser presenceUser = presenceUserListAdapter.getItem(position);
+            presenceUser.setName(String.valueOf(id));
+            presenceUserListAdapter.notifyDataSetChanged();
+        });
+
+        return binding;
     }
 }

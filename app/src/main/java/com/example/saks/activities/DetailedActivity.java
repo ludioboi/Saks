@@ -1,6 +1,7 @@
 package com.example.saks.activities;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,12 @@ import com.example.saks.R;
 
 public class DetailedActivity extends AppCompatActivity {
 
+    TextView name;
+    TextView status;
+    TextView date;
+    TextView time;
+    TextView klasse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +29,16 @@ public class DetailedActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        name = findViewById(R.id.detailName);
+        status = findViewById(R.id.detailStatus);
+        date = findViewById(R.id.detailDate);
+        time = findViewById(R.id.detailTime);
+        klasse = findViewById(R.id.detailKlasse);
+
+        name.setText("Hans");
+        klasse.setText("FOI2A");
     }
+
+
 }
