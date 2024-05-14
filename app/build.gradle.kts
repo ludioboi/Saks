@@ -6,6 +6,7 @@ android {
     namespace = "com.example.saks"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.saks"
         minSdk = 26
@@ -32,11 +33,11 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
     }
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -49,8 +50,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
-
+    implementation (libs.socket.io.client)
     implementation (libs.androidx.recyclerview)
     implementation (libs.androidx.recyclerview.selection)
     implementation(libs.journeyapps.zxing.android.embedded)
