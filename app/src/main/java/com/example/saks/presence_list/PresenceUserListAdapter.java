@@ -22,7 +22,12 @@ public class PresenceUserListAdapter extends BaseAdapter {
     }
 
     public void addPresenceUser(PresenceUser presenceUser) {
-        presenceUsers.add(presenceUser);
+        int pos = getPresentUserByID(presenceUser.getId());
+        if (pos == -1) {
+            presenceUsers.add(presenceUser);
+        } else {
+            presenceUsers.set(pos, presenceUser);
+        }
         activity.runOnUiThread(this::notifyDataSetChanged);
     }
     public void clearPresenceUsers() {
@@ -67,5 +72,14 @@ public class PresenceUserListAdapter extends BaseAdapter {
             presentTextView.setText(activity.getString(R.string.not_present));
         }
         return convertView;
+    }
+
+    public int getPresentUserByID(int id) {
+        for (int i = 0; i < presenceUsers.size(); i++) {
+            if (presenceUsers.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
