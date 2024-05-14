@@ -45,6 +45,7 @@
         app:layout_constraintVertical_bias="0.279" />
 
     <EditText
+        android:enabled="false"
         android:id="@+id/short_key_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,6 +65,7 @@
 
     <Button
         android:id="@+id/accept_shortkey_button"
+        android:enabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/set_new_presence"

@@ -85,6 +85,8 @@ public class ShortKeyActivity extends AppCompatActivity {
                 LinkedTreeMap d = data.get(position);
                 runOnUiThread(() -> {
                     class_name.setText(d.get("description").toString());
+                    accept_shortkey_button.setEnabled(true);
+                    short_key_edittext.setEnabled(true);
                 });
             }
 
