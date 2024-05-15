@@ -6,16 +6,22 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.saks.R;
 import com.example.saks.databinding.ActivityLoginBinding;
 
 public class CreateUserActivity extends AppCompatActivity {
 
-    CreateUserActivity binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Button createUserButton = findViewById(R.id.createuserButton);
+        createUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
 }
