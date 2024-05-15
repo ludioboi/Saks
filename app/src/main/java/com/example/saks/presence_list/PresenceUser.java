@@ -15,10 +15,6 @@ public class PresenceUser {
     long present_from, present_until, date;
     int id;
 
-    public PresenceUser(String name) {
-        this.name = name;
-    }
-
     public PresenceUser(String name, int id, String class_, long date, long present_from, long present_until) {
         this.name = name;
         this.id = id;

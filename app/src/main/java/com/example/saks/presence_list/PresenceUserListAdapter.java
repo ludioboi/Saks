@@ -30,9 +30,11 @@ public class PresenceUserListAdapter extends BaseAdapter {
         }
         activity.runOnUiThread(this::notifyDataSetChanged);
     }
+
     public void clearPresenceUsers() {
         presenceUsers.clear();
     }
+
     public void removePresenceUser(PresenceUser presenceUser) {
         presenceUsers.remove(presenceUser);
     }

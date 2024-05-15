@@ -27,4 +27,5 @@
     <string name="server_connection_failed">Server konnte nicht erreicht werden</string>
     <string name="present">Anwesend</string>
     <string name="not_present">Nicht Anwesend</string>
+    <string name="fach">Fach</string>
 </resources>

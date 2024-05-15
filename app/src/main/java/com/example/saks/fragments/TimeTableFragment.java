@@ -2,65 +2,103 @@ package com.example.saks.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.saks.R;
+import com.example.saks.api.API_Access;
+import com.example.saks.time_table.TableRow;
+import com.example.saks.time_table.TableRowAdapter;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.socket.client.Socket;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TimeTableFragment#newInstance} factory method to
+ * Use the  factory method to
  * create an instance of this fragment.
  */
 public class TimeTableFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Socket ioSocket;
 
     public TimeTableFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TimeTableFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TimeTableFragment newInstance(String param1, String param2) {
+    public static TimeTableFragment newInstance() {
         TimeTableFragment fragment = new TimeTableFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
+
+    View binding;
+    RecyclerView recycler_view;
+    TableRowAdapter tableRowAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_time_table, container, false);
+        binding = inflater.inflate(R.layout.fragment_time_table, container, false);
+
+        recycler_view = binding.findViewById(R.id.recycler_view);
+
+        setRecyclerView();
+
+        API_Access.getCall("/me/schedule", new Callback() {
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                ArrayList<LinkedTreeMap> data = new Gson().fromJson(response.body().string(), ArrayList.class);
+                for(LinkedTreeMap fach : data) {
+                    long ms = (long) fach.get("start_time");
+                    long ms2 = (long) fach.get("end_time");
+
+                    int timeId = (int) fach.get("time_id");
+
+                    long hours = TimeUnit.MILLISECONDS.toHours(ms);
+                    ms = TimeUnit.HOURS.toMillis(hours);
+
+                    String lehrer = (String) fach.get("subject");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            }
+            });
+
+            return binding;
+    }
+
+    private void setRecyclerView() {
+        recycler_view.setHasFixedSize(true);
+        recycler_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        tableRowAdapter = new TableRowAdapter(getActivity(), getList());
+        recycler_view.setAdapter(tableRowAdapter);
+    }
+
+    private List<TableRow> getList() {
+        List<TableRow> list = new ArrayList<>();
+        return list;
     }
 }
