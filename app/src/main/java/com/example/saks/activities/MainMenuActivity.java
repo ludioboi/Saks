@@ -28,15 +28,23 @@ import com.example.saks.api.API_Access;
 import com.example.saks.databinding.ActivityMainMenuBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     ActivityMainMenuBinding binding;
     NavController navController;
+    int permLevel = 1;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -118,6 +126,24 @@ public class MainMenuActivity extends AppCompatActivity {
             presenceIntent.setData(uri);
             startActivity(presenceIntent);
         }
+        API_Access.getCall("/me", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(getApplicationContext(), "Fehler beim Laden der Daten", Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.code() == 200) {
+                    LinkedTreeMap data = new Gson().fromJson(response.body().string(), LinkedTreeMap.class);
+                    if (data.containsKey("level") && data.get("level") != null) {
+                        permLevel = Math.round(Float.parseFloat(data.get("level").toString()));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -145,7 +171,12 @@ public class MainMenuActivity extends AppCompatActivity {
                 navController.navigate(R.id.homeFragment);
             }
             if (item.getItemId() == R.id.mmProfile) {
-                navController.navigate(R.id.profilFragment);
+                if (permLevel == 1) {
+                    navController.navigate(R.id.profilFragment);
+                } else if (permLevel == 3) {
+                    navController.navigate(R.id.adminFragment);
+                }
+
             }
             if (item.getItemId() == R.id.mmSettings) {
                 navController.navigate(R.id.settingsFragment);

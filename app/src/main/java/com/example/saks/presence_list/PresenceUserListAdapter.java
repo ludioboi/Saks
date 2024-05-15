@@ -59,8 +59,8 @@ public class PresenceUserListAdapter extends BaseAdapter {
 
         convertView = activity.getLayoutInflater().inflate(com.example.saks.R.layout.list_item, null);
         PresenceUser presenceUser = presenceUsers.get(position);
-        TextView nameTextView = convertView.findViewById(R.id.listName);
-        TextView classTextView = convertView.findViewById(R.id.listKlasse);
+        TextView nameTextView = convertView.findViewById(R.id.user_name_textview);
+        TextView classTextView = convertView.findViewById(R.id.user_class_textview);
         TextView presentTextView = convertView.findViewById(R.id.present_text);
         classTextView.setText(presenceUser.getClass_());
         nameTextView.setText(presenceUser.getName());

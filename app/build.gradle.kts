@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
+    implementation(libs.socket.io.client)
     implementation(libs.navigation.ui)
     implementation(libs.coordinatorlayout)
     implementation(libs.androidx.lifecycle.livedata.ktx)

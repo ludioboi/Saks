@@ -25,4 +25,9 @@
         android:name="com.example.saks.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.example.saks.fragments.AdminFragment"
+        android:label="admin_fragment"
+        tools:layout="@layout/fragment_admin" />
 </navigation>
