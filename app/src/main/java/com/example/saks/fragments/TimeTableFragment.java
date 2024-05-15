@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.saks.R;
 import com.example.saks.api.API_Access;
@@ -68,22 +69,40 @@ public class TimeTableFragment extends Fragment {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ArrayList<LinkedTreeMap> data = new Gson().fromJson(response.body().string(), ArrayList.class);
+                String json = response.body().string();
+                getActivity().runOnUiThread(() -> {
+                    if (response.body() != null){
+                        Toast.makeText(getContext(), json, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Body is null", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                ArrayList<LinkedTreeMap> data = new Gson().fromJson(json, ArrayList.class);
+
                 for(LinkedTreeMap fach : data) {
-                    long ms = (long) fach.get("start_time");
-                    long ms2 = (long) fach.get("end_time");
+                    String start_timeString = fach.get("start_time").toString().replace(".0", "");
+                    String end_timeString = fach.get("end_time").toString().replace(".0", "");
 
-                    int timeId = (int) fach.get("time_id");
+                    long start_time = Long.parseLong(start_timeString);
+                    double end_time = Double.parseDouble(end_timeString);
 
-                    long hours = TimeUnit.MILLISECONDS.toHours(ms);
-                    ms = TimeUnit.HOURS.toMillis(hours);
+                    int timeId = Integer.parseInt(fach.get("time_id").toString().replace(".0", ""));
 
-                    String lehrer = (String) fach.get("subject");
+
+                    long hours = TimeUnit.MILLISECONDS.toHours(start_time);
+                    long minutes = TimeUnit.MILLISECONDS.toMinutes(start_time);
+                    String room_short = fach.get("room_short").toString();
+                    String subject = (String) fach.get("subject");
+                    boolean double_lesson = (double) fach.get("double_lesson") == 1;
+                    tableRowAdapter.addTableRow(new TableRow(hours + ":" + minutes, subject, "Lehrer", 1, room_short, "Montag", double_lesson));
                 }
+
             }
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
             }
             });
 

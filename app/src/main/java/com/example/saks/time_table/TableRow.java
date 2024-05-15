@@ -2,9 +2,10 @@ package com.example.saks.time_table;
 
 public class TableRow {
     public String uhrzeit, fach, lehrer, raum, tag;
-    public int klasse, doppelstunde;
+    public int klasse;
+    boolean doppelstunde;
 
-    public TableRow(String uhrzeit, String fach, String lehrer, int klasse, String raum, String tag, int doppelstunde) {
+    public TableRow(String uhrzeit, String fach, String lehrer, int klasse, String raum, String tag, boolean doppelstunde) {
         this.uhrzeit = uhrzeit;
         this.fach = fach;
         this.lehrer = lehrer;
@@ -38,7 +39,7 @@ public class TableRow {
         return tag;
     }
 
-    public int getDoppelstunde() {
+    public boolean getDoppelstunde() {
         return doppelstunde;
     }
 
@@ -66,7 +67,7 @@ public class TableRow {
         this.tag = tag;
     }
 
-    public void setDoppelstunde(int doppelstunde) {
+    public void setDoppelstunde(boolean doppelstunde) {
         this.doppelstunde = doppelstunde;
     }
 

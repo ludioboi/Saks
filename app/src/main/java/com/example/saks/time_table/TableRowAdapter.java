@@ -25,6 +25,7 @@ public class TableRowAdapter extends RecyclerView.Adapter<TableRowAdapter.ViewHo
 
    public void addTableRow(TableRow tableRow) {
        tableRows.add(tableRow);
+       activity.runOnUiThread(this::notifyDataSetChanged);
    }
 
     @NonNull
