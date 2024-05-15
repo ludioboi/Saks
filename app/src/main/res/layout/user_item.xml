@@ -35,50 +35,35 @@
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listImage"
             android:text="Name"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/user_class_textview"
+            android:id="@+id/user_id_textview"
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_marginStart="-120dp"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@id/user_name_textview"
-            android:text="Klasse"
+            android:text="ID"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="130dp"
-            android:layout_height="100dp"
-            android:layout_toEndOf="@id/user_class_textview"
+        <TextView
+            android:id="@+id/user_role_textview"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
             android:layout_marginStart="120dp"
-            android:orientation="vertical">
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/user_name_textview"
+            android:text="Rolle"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/present_mini_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/remove_presence_icon"
-                app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:tint="@color/icon_red" />
-
-            <TextView
-                android:id="@+id/present_text"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:text="Text"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-        </LinearLayout>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

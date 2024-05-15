@@ -28,4 +28,11 @@
     <string name="present">Anwesend</string>
     <string name="not_present">Nicht Anwesend</string>
     <string name="fach">Fach</string>
+    <string name="firstname">Vorname</string>
+    <string name="Lastname">Nachname</string>
+    <string name="secondname">Zweitname</string>
+    <string name="role">Rolle</string>
+    <string name="id">ID</string>
+    <string name="shortname">ShortName Kürzel</string>
+    <string name="permlevel">Permission Level</string>
 </resources>

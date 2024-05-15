@@ -1,11 +1,8 @@
 package com.example.saks.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -41,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
-
     }
 
     private void initBinding() {
