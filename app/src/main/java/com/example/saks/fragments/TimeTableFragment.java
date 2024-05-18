@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.socket.client.Socket;
@@ -77,24 +78,26 @@ public class TimeTableFragment extends Fragment {
                         Toast.makeText(getContext(), "Body is null", Toast.LENGTH_SHORT).show();
                     }
                 });
+                if (response.code() != 200) {
+                    return;
+                }
+                ArrayList<LinkedTreeMap<String, String>> data = new Gson().fromJson(json, ArrayList.class);
 
-                ArrayList<LinkedTreeMap> data = new Gson().fromJson(json, ArrayList.class);
-
-                for(LinkedTreeMap fach : data) {
-                    String start_timeString = fach.get("start_time").toString().replace(".0", "");
-                    String end_timeString = fach.get("end_time").toString().replace(".0", "");
+                for(LinkedTreeMap<String, String> fach : data) {
+                    String start_timeString = fach.get("start_time");
+                    String end_timeString = fach.get("end_time");
 
                     long start_time = Long.parseLong(start_timeString);
-                    double end_time = Double.parseDouble(end_timeString);
+                    long end_time = Long.parseLong(end_timeString);
 
-                    int timeId = Integer.parseInt(fach.get("time_id").toString().replace(".0", ""));
+                    int timeId = Integer.parseInt(fach.get("time_id"));
 
 
                     long hours = TimeUnit.MILLISECONDS.toHours(start_time);
                     long minutes = TimeUnit.MILLISECONDS.toMinutes(start_time);
-                    String room_short = fach.get("room_short").toString();
+                    String room_short = fach.get("room_short");
                     String subject = (String) fach.get("subject");
-                    boolean double_lesson = (double) fach.get("double_lesson") == 1;
+                    boolean double_lesson = Objects.equals(fach.get("double_lesson"), "1");
                     tableRowAdapter.addTableRow(new TableRow(hours + ":" + minutes, subject, "Lehrer", 1, room_short, "Montag", double_lesson));
                 }
 

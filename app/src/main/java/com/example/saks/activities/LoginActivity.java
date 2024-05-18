@@ -14,7 +14,9 @@ import com.example.saks.api.Error;
 import com.example.saks.api.Login;
 import com.example.saks.api.Token;
 import com.example.saks.databinding.ActivityLoginBinding;
+import com.example.saks.time_table.TableRowAdapter;
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.IOException;
 
@@ -73,6 +75,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.code() == 303) {
+                        LinkedTreeMap<String, String> data = new Gson().fromJson(response.body().string(), LinkedTreeMap.class);
+                        runOnUiThread(() -> {
+                            Toast.makeText(LoginActivity.this, "Bitte lege ein neues Passwort fest", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, SetNewPasswordActivity.class);
+                            intent.putExtra("id", id);
+                            intent.putExtra("token", data.get("token"));
+                            startActivity(intent);
+                        });
+                        return;
+                    }
                     if (response.isSuccessful()) {
                         Token token = new Gson().fromJson(response.body().string(), Token.class);
                         API_Access.setToken(token.token, getApplicationContext());

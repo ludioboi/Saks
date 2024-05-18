@@ -100,7 +100,7 @@ public class ProfilFragment extends Fragment {
             Toast.makeText(getContext(), presenceUser.toString(), Toast.LENGTH_LONG).show();
         });
         try {
-            ioSocket = IO.socket("ws://192.168.178.3:3030");
+            ioSocket = IO.socket(API_Access.websocket_url);
             ioSocket.on(Socket.EVENT_CONNECT, args -> {
                 ioSocket.emit("token", API_Access.getToken(getContext()));
             });

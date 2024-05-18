@@ -22,7 +22,8 @@ import okhttp3.Response;
 
 public class API_Access {
 
-    static String baseurl = "http://192.168.178.3:8080";
+    static final String baseurl = "http://192.168.178.72:8080";
+    public static final String websocket_url = "ws://192.168.178.72:3030";
     public static String token = "";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     static OkHttpClient client = new OkHttpClient();

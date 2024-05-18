@@ -64,6 +64,24 @@
             android:src="@drawable/transparent_banner" />
 
         <TextView
+            android:id="@+id/user_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:translationX="20dp"
+            android:textStyle="bold"
+            android:text="USERNAME" />
+
+        <TextView
+            android:id="@+id/user_id_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:translationX="20dp"
+            android:textStyle="bold"
+            android:text="MATRIKELNUMMER" />
+
+        <TextView
             android:id="@+id/class_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

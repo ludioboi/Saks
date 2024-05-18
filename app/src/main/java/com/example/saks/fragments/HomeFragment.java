@@ -1,5 +1,8 @@
 package com.example.saks.fragments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -36,7 +39,7 @@ import okhttp3.Response;
 public class HomeFragment extends Fragment {
 
     private ProgressBar spinner;
-    private TextView class_textview, room_textview, anwesenheit_textview, connection_feedback_textview;
+    private TextView class_textview, room_textview, anwesenheit_textview, connection_feedback_textview, user_name_textview, user_id_textview;
     LinearLayout connection_feedback_layout;
     private LinearLayoutCompat linearLayout;
     Button try_again_button;
@@ -64,12 +67,16 @@ public class HomeFragment extends Fragment {
         class_textview.setVisibility(View.INVISIBLE);
         room_textview.setVisibility(View.INVISIBLE);
         anwesenheit_textview.setVisibility(View.INVISIBLE);
+        user_name_textview.setVisibility(View.INVISIBLE);
+        user_id_textview.setVisibility(View.INVISIBLE);
     }
 
     private void showTextviews(){
         class_textview.setVisibility(View.VISIBLE);
         room_textview.setVisibility(View.VISIBLE);
         anwesenheit_textview.setVisibility(View.VISIBLE);
+        user_name_textview.setVisibility(View.VISIBLE);
+        user_id_textview.setVisibility(View.VISIBLE);
 
     }
 
@@ -106,6 +113,26 @@ public class HomeFragment extends Fragment {
                             if (response.body() != null) {
                                 try {
                                     LinkedTreeMap data = new Gson().fromJson(response.body().string(), LinkedTreeMap.class);
+                                    if (data.get("id") != null) {
+                                        String id = String.valueOf(Math.round(Double.parseDouble(data.get("id").toString())));
+                                        user_id_textview.setText(id);
+                                        user_id_textview.setVisibility(View.VISIBLE);
+                                        user_id_textview.setOnClickListener(v -> {
+                                            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                                            ClipData clip = ClipData.newPlainText("Copied Text", id);
+                                            clipboard.setPrimaryClip(clip);
+                                            Toast.makeText(getActivity(), "ID wurde in die Zwischenablage kopiert", Toast.LENGTH_SHORT).show();
+                                        });
+                                    }
+                                    if (data.containsKey("firstname") && data.containsKey("lastname")) {
+                                        String name = data.get("firstname").toString() + " ";
+                                        if (data.containsKey("secondname") && data.get("secondname") != null) {
+                                            name += data.get("secondname").toString() + " ";
+                                        }
+                                        name += data.get("lastname").toString();
+                                        user_name_textview.setVisibility(View.VISIBLE);
+                                        user_name_textview.setText(name);
+                                    }
                                     if (data.get("class") != null) {
                                         LinkedTreeMap class_data = (LinkedTreeMap) data.get("class");
                                         class_textview.setText(class_data.get("short").toString());
@@ -147,6 +174,8 @@ public class HomeFragment extends Fragment {
         connection_feedback_layout = inflated.findViewById(R.id.connection_feedback_layout);
         connection_feedback_textview = inflated.findViewById(R.id.connection_feedback_textview);
         try_again_button = inflated.findViewById(R.id.try_again_button);
+        user_name_textview = inflated.findViewById(R.id.user_name_textview);
+        user_id_textview = inflated.findViewById(R.id.user_id_textview);
         try_again_button.setOnClickListener(v -> getUpdates());
         hideTextviews();
         //getUpdates();

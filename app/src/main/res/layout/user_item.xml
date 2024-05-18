@@ -29,40 +29,51 @@
 
         <TextView
             android:id="@+id/user_name_textview"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_toEndOf="@id/listImage"
             android:text="Name"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/user_id_textview"
-            android:layout_width="80dp"
+            android:layout_width="200dp"
             android:layout_height="30dp"
-            android:layout_marginStart="-120dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@id/user_name_textview"
+            android:layout_toEndOf="@+id/listImage"
             android:text="ID"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/user_role_textview"
-            android:layout_width="120dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="235dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@id/user_name_textview"
+            android:layout_toEndOf="@+id/listImage"
             android:text="Rolle"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/short_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="227dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="17dp"
+            android:layout_toEndOf="@+id/listImage" />
 
     </RelativeLayout>
 

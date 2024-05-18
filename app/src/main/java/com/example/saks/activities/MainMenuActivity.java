@@ -138,8 +138,8 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == 200) {
                     LinkedTreeMap data = new Gson().fromJson(response.body().string(), LinkedTreeMap.class);
-                    if (data.containsKey("level") && data.get("level") != null) {
-                        permLevel = Math.round(Float.parseFloat(data.get("level").toString()));
+                    if (data.containsKey("role") && data.get("role") != null) {
+                        permLevel = Math.round(Float.parseFloat(data.get("role").toString()));
                     }
                 }
             }
