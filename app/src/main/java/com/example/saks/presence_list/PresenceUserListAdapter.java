@@ -76,7 +76,7 @@ public class PresenceUserListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public int getPresentUserByID(int id) {
+    public int getPresentUserByID(long id) {
         for (int i = 0; i < presenceUsers.size(); i++) {
             if (presenceUsers.get(i).getId() == id) {
                 return i;

@@ -13,9 +13,9 @@ public class PresenceUser {
 
     private String name, class_;
     long present_from, present_until, date;
-    int id;
+    long id;
 
-    public PresenceUser(String name, int id, String class_, long date, long present_from, long present_until) {
+    public PresenceUser(String name, long id, String class_, long date, long present_from, long present_until) {
         this.name = name;
         this.id = id;
         this.class_ = class_;
@@ -28,7 +28,7 @@ public class PresenceUser {
         return name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -60,7 +60,7 @@ public class PresenceUser {
         this.name = name;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

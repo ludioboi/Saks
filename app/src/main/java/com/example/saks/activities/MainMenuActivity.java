@@ -171,9 +171,9 @@ public class MainMenuActivity extends AppCompatActivity {
                 navController.navigate(R.id.homeFragment);
             }
             if (item.getItemId() == R.id.mmProfile) {
-                if (permLevel == 1) {
+                if (permLevel != 3) {
                     navController.navigate(R.id.profilFragment);
-                } else if (permLevel == 3) {
+                } else {
                     navController.navigate(R.id.adminFragment);
                 }
 

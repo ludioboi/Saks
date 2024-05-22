@@ -106,7 +106,7 @@ public class ProfilFragment extends Fragment {
             });
             ioSocket.on("student", args1 -> {
                 LinkedTreeMap presence = new Gson().fromJson(args1[0].toString(), LinkedTreeMap.class);
-                int studentID = Math.round(Float.parseFloat(presence.get("user").toString()));
+                long studentID = Math.round(Double.parseDouble(presence.get("user").toString()));
                 double present_from = (double) presence.get("present_from");
                 double present_until = (double) presence.get("present_until");
                 double date = (double) presence.get("date");
