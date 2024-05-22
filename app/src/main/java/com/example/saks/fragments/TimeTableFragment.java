@@ -38,8 +38,6 @@ import okhttp3.Response;
  */
 public class TimeTableFragment extends Fragment {
 
-    private Socket ioSocket;
-
     public TimeTableFragment() {
     }
 
@@ -66,61 +64,60 @@ public class TimeTableFragment extends Fragment {
 
         setRecyclerView();
 
-        API_Access.getCall("/me/schedule", new Callback() {
+//        API_Access.getCall("/me/schedule", new Callback() {
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                String json = response.body().string();
+//                getActivity().runOnUiThread(() -> {
+//                    if (response.body() != null){
+//                        Toast.makeText(getContext(), json, Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getContext(), "Body is null", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                if (response.code() != 200) {
+//                    return;
+//                }
+//                ArrayList<LinkedTreeMap<String, String>> data = new Gson().fromJson(json, ArrayList.class);
+//
+//                for(LinkedTreeMap<String, String> fach : data) {
+//                    String start_timeString = fach.get("start_time");
+//                    String end_timeString = fach.get("end_time");
+//
+//                    long start_time = Long.parseLong(start_timeString);
+//                    long end_time = Long.parseLong(end_timeString);
+//
+//                    int timeId = Integer.parseInt(fach.get("time_id"));
+//
+//
+//                    long hours = TimeUnit.MILLISECONDS.toHours(start_time);
+//                    long minutes = TimeUnit.MILLISECONDS.toMinutes(start_time);
+//                    String room_short = fach.get("room_short");
+//                    String subject = (String) fach.get("subject");
+//                    boolean double_lesson = Objects.equals(fach.get("double_lesson"), "1");
+//                    tableRowAdapter.addTableRow(new TableRow(hours + ":" + minutes, subject, "Lehrer", 1, room_short, "Montag", double_lesson));
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//
+//            }
+//            });
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String json = response.body().string();
-                getActivity().runOnUiThread(() -> {
-                    if (response.body() != null){
-                        Toast.makeText(getContext(), json, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Body is null", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                if (response.code() != 200) {
-                    return;
-                }
-                ArrayList<LinkedTreeMap<String, String>> data = new Gson().fromJson(json, ArrayList.class);
+        //ToDO: Remove
+        tableRowAdapter.addTableRow(new TableRow("8:00", "Deutsch", "Lehrer", 1, "101", "Montag", true));
+        tableRowAdapter.addTableRow(new TableRow("9:50", "English", "Lehrer", 1, "G017", "Montag", true));
 
-                for(LinkedTreeMap<String, String> fach : data) {
-                    String start_timeString = fach.get("start_time");
-                    String end_timeString = fach.get("end_time");
-
-                    long start_time = Long.parseLong(start_timeString);
-                    long end_time = Long.parseLong(end_timeString);
-
-                    int timeId = Integer.parseInt(fach.get("time_id"));
-
-
-                    long hours = TimeUnit.MILLISECONDS.toHours(start_time);
-                    long minutes = TimeUnit.MILLISECONDS.toMinutes(start_time);
-                    String room_short = fach.get("room_short");
-                    String subject = (String) fach.get("subject");
-                    boolean double_lesson = Objects.equals(fach.get("double_lesson"), "1");
-                    tableRowAdapter.addTableRow(new TableRow(hours + ":" + minutes, subject, "Lehrer", 1, room_short, "Montag", double_lesson));
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
-            }
-            });
-
-            return binding;
+        return binding;
     }
 
     private void setRecyclerView() {
         recycler_view.setHasFixedSize(true);
         recycler_view.setLayoutManager(new LinearLayoutManager(getActivity()));
-        tableRowAdapter = new TableRowAdapter(getActivity(), getList());
+        tableRowAdapter = new TableRowAdapter(getActivity());
         recycler_view.setAdapter(tableRowAdapter);
-    }
-
-    private List<TableRow> getList() {
-        List<TableRow> list = new ArrayList<>();
-        return list;
     }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.saks.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TableRowAdapter extends RecyclerView.Adapter<TableRowAdapter.ViewHolder> {
@@ -22,6 +23,11 @@ public class TableRowAdapter extends RecyclerView.Adapter<TableRowAdapter.ViewHo
        this.activity = activity;
        this.tableRows = list;
    }
+
+    public TableRowAdapter(Activity activity) {
+        this.activity = activity;
+        this.tableRows = new ArrayList<>();
+    }
 
    public void addTableRow(TableRow tableRow) {
        tableRows.add(tableRow);

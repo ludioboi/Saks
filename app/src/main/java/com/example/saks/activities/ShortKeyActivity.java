@@ -108,7 +108,7 @@ public class ShortKeyActivity extends AppCompatActivity {
 
                 data = new Gson().fromJson(response.body().string(), List.class);
                 for (LinkedTreeMap d : data) {
-                    list.add(d.get("short_name").toString());
+                    list.add(d.get("short").toString());
                 }
                 ArrayAdapter<String> adp1 = new ArrayAdapter<>(ShortKeyActivity.this,
                         android.R.layout.simple_list_item_1, list);
