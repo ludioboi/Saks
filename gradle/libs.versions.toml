@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.0"
+agp = "8.4.1"
 androidWeekView = "1.2.6"
 core = "3.4.1"
 flexbox = "3.0.0"
