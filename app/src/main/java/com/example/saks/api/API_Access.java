@@ -22,8 +22,8 @@ import okhttp3.Response;
 
 public class API_Access {
 
-    static final String baseurl = "http://192.168.178.72:3330";
-    public static final String websocket_url = "ws://192.168.178.72:3331";
+    static final String baseurl = "http://dg6bi.dynaccess.de:3330";
+    public static final String websocket_url = "ws://dg6bi.dynaccess.de:3331";
     public static String token = "";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     static OkHttpClient client = new OkHttpClient();
